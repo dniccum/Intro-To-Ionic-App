@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-buttons start>
+      <button ion-button icon-only clear (tap)="closeModal()">
+        <ion-icon light name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="dark" padding>
+  <h2 color="light" padding-top>Enter a name</h2>
+  <form (ngSubmit)="formSubmit()" padding-top>
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>First Name</ion-label>
+        <ion-input type="text" [(ngModel)]="person.firstName" name="firstName" id="firstName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Last Name</ion-label>
+        <ion-input type="text" [(ngModel)]="person.lastName" name="lastName" id="lastName"></ion-input>
+      </ion-item>
+    </ion-list>
+    <button ion-button block type="submit">Submit</button>
+  </form>
+</ion-content>
