@@ -14,3 +14,50 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+@font-face {
+  font-family: 'Bree Serif';
+  src: url('../assets/fonts/BreeSerif-Regular.eot');
+  src: local('☺'), url('../assets/fonts/BreeSerif-Regular.woff') format('woff'), url('../assets/fonts/BreeSerif-Regular.ttf') format('truetype'), url('../assets/fonts/BreeSerif-Regular.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Y2K Neophyte';
+  src: url('../assets/fonts/Y2K_neophyte_italic.eot');
+  src: local('☺'), url('../assets/fonts/Y2K_neophyte_italic.woff') format('woff'), url('../assets/fonts/Y2K_neophyte_italic.ttf') format('truetype'), url('../assets/fonts/Y2K_neophyte_italic.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+ion-content {
+    &.no-scroll {
+        overflow: hidden;
+
+        .scroll-content {
+            overflow: hidden !important;
+        }
+    }
+
+    &.dark {
+
+        .scroll-content {
+            background-color: color($colors, "dark");
+        }
+    }
+}
+
+ion-toast {
+
+    &.danger {
+        .toast-wrapper {
+            background-color: color($colors, "danger");
+        }
+    }
+    &.success {
+        .toast-wrapper {
+            background-color: color($colors, "favorite");
+        }
+    }
+}
