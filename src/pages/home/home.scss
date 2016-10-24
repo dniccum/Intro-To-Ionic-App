@@ -99,11 +99,14 @@ page-home {
       margin-left: -30px;
       width: 60px;
       height: 60px;
-      border-radius: 50%;
+      border-radius: 30px;
       z-index: 1000;
       background-color: color($colors, "primary");
       color: color($colors, "light");
       font-size: 2.6em;
+      padding: 0;
+
+      text-align: center;
 
       .platform-android & {
         top: -28px;
