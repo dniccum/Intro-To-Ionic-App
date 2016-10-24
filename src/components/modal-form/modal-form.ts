@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { ViewController, ToastController } from 'ionic-angular';
-import { SQLite } from 'ionic-native';
+import { SQLite, Keyboard } from 'ionic-native';
 
 /*
   Generated class for the ModalForm component.
@@ -24,6 +24,7 @@ export class ModalForm {
   closeModal() {
     this.viewController.dismiss();
     this.clearForm();
+    Keyboard.close();
   }
 
   clearForm() {
