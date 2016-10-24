@@ -12,12 +12,12 @@
   <div class="heading">
     <small>who paid</small>Last?
   </div>
-  <ion-card class="no-results">
+  <ion-card class="no-results" *ngIf="resultArray.length === 0">
     No People Exist!
   </ion-card>
-  <ion-card class="result them">
+  <ion-card class="result {{ result.whoPaid }}" (longPress)="showDelete(i, result.id)" *ngFor="let result of resultArray; let i = index;" (tap)="toggleResult(i, result.id, result.whoPaid)">
     <div class="persons-name">
-      Tony Stark
+      {{ result.firstName }} {{ result.lastName }}
     </div>
     <div class="label you">you</div>
     <div class="label them">them</div>
