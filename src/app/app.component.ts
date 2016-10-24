@@ -22,14 +22,14 @@ export class MyApp {
         name: 'data.db',
         location: 'default'
       }).then(() => {
-        db.executeSql('CREATE TABLE IF NOT EXISTS DataTable (firstName VARCHAR(32), lastName VARCHAR(32), whoPaid  VARCHAR(4))', {}).then(() => {
-          
+        db.executeSql('CREATE TABLE IF NOT EXISTS DataTable (id INTEGER PRIMARY KEY AUTOINCREMENT, firstName VARCHAR(32), lastName VARCHAR(32), whoPaid VARCHAR(4))', {}).then(() => {
+
         }, (err) => {
-          console.error('Unable to execute sql: ', err);
+          console.error('Unable to execute sql: ', JSON.stringify(err));
         });
       }, (err) => {
-        console.error('Unable to open database: ', err);
-      })
+        console.error('Unable to open database: ', JSON.stringify(err));
+      });
     });
   }
 }
