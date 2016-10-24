@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { ViewController, ToastController } from 'ionic-angular';
+import { SQLite } from 'ionic-native';
 
 /*
   Generated class for the ModalForm component.
@@ -13,7 +14,7 @@ import { ViewController, ToastController } from 'ionic-angular';
   templateUrl: 'modal-form.html'
 })
 export class ModalForm {
-  public person: Object = {
+  public person = {
     firstName: null,
     lastName: null
   };
@@ -42,17 +43,25 @@ export class ModalForm {
       toast.present();
     } else {
       // form is valid
-      // save to database
-      
+      let db = new SQLite();
       let toast = this.toastController.create({
         message: `${this.person["firstName"]} ${this.person["lastName"]} was added successfully.`,
         position: 'top',
         cssClass: 'success',
         duration: 2000
       });
-      toast.present();
 
-      this.closeModal();
+      db.openDatabase({
+        name: 'data.db',
+        location: 'default'
+      }).then(() => {
+        db.executeSql('INSERT INTO DataTable (firstName, lastName, whoPaid) VALUES (?,?,?)', [this.person["firstName"], this.person["lastName"], 'you']).then(() => {
+          toast.present();
+          this.closeModal();
+        }, (err) => {
+          console.error('Unable to execute sql: ', JSON.stringify(err));
+        });
+      });      
     }
   }
 
