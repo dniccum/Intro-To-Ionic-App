@@ -3,7 +3,7 @@
   <name>Who Paid Last?</name>
   <description>An awesome Ionic/Cordova app.</description>
   <author email="doug@dniccumdesign.com" href="http://dniccumdesign.com/">Doug Niccum Design, LLC</author>
-  <content src="http://192.168.1.170:8100" original-src="index.html"/>
+  <content src="index.html"/>
   <access origin="*"/>
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
