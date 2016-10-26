@@ -106,8 +106,6 @@ export class HomePage {
     let db = new SQLite();
     let changedWhoPaid: string = '';
 
-    console.log(id, whoPaid);
-
     // update model
     if (whoPaid === 'you') {
       changedWhoPaid = 'them';
