@@ -104,23 +104,26 @@ export class HomePage {
 
   toggleResult(index: number, id: number, whoPaid: string) {
     let db = new SQLite();
+    let changedWhoPaid: string = '';
 
     console.log(id, whoPaid);
 
     // update model
     if (whoPaid === 'you') {
-      this.resultArray[index]["whoPaid"] = 'them';
+      changedWhoPaid = 'them';
     } else {
-      this.resultArray[index]["whoPaid"] = 'you';
+      changedWhoPaid = 'you';
     }
+
+    this.resultArray[index]["whoPaid"] = changedWhoPaid;
 
     // update database
     db.openDatabase({
       name: 'data.db',
       location: 'default'
     }).then(() => {
-      db.executeSql('UPDATE DataTable SET whoPaid = ? WHERE id = ?', [whoPaid, id]).then((results) => {
-
+      db.executeSql('UPDATE DataTable SET whoPaid = ? WHERE id = ?', [changedWhoPaid, id]).then((result) => {
+        console.log(JSON.stringify(result));
       }, (err) => {
         console.error('Unable to execute sql: ', JSON.stringify(err));
       });
