@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
-import { StatusBar, SQLite } from 'ionic-native';
+import { StatusBar, SQLite, Mixpanel } from 'ionic-native';
 
 import { HomePage } from '../pages/home/home';
 
@@ -16,6 +16,11 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
+
+      // Mixpanel Init
+      Mixpanel.init("f4e6fb63f40d6acbab002ad63c8b95a7").then(() => {
+        Mixpanel.track("App Booted");
+      });
 
       let db = new SQLite();
       db.openDatabase({
