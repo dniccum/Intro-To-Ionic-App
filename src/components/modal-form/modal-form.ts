@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { ViewController, ToastController } from 'ionic-angular';
-import { SQLite, Keyboard } from 'ionic-native';
+import { SQLite, Keyboard, Mixpanel } from 'ionic-native';
 
 /*
   Generated class for the ModalForm component.
@@ -57,6 +57,9 @@ export class ModalForm {
         location: 'default'
       }).then(() => {
         db.executeSql('INSERT INTO DataTable (firstName, lastName, whoPaid) VALUES (?,?,?)', [this.person["firstName"], this.person["lastName"], 'you']).then(() => {
+          // Mixpanel Analytics
+          Mixpanel.track("Person Added");
+          
           toast.present();
           this.closeModal();
         }, (err) => {

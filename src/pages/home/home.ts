@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { NavController, ModalController, Platform, ActionSheetController, ToastController } from 'ionic-angular';
-import { SQLite } from 'ionic-native';
+import { SQLite, Mixpanel } from 'ionic-native';
 import { ModalForm } from '../../components/modal-form/modal-form';
 import { Settings } from '../settings/settings';
 
@@ -76,6 +76,10 @@ export class HomePage {
       db.executeSql('DELETE FROM DataTable WHERE id = ?', [id]).then(() => {
         toast.present();
         this.resultArray.splice(index, 1);
+        
+        // Mixpanel Analytics
+        Mixpanel.track("Person Deleted");
+        
       }, (err) => {
         console.error('Unable to execute sql: ', JSON.stringify(err));
       });
@@ -114,6 +118,9 @@ export class HomePage {
     }
 
     this.resultArray[index]["whoPaid"] = changedWhoPaid;
+
+    // Mixpanel Analytics
+    Mixpanel.track("Result Toggled");
 
     // update database
     db.openDatabase({
