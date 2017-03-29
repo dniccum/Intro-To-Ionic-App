@@ -27,4 +27,3 @@ export class PressDirective implements OnInit, OnDestroy {
     this.pressGesture.destroy();
   }
 }
-

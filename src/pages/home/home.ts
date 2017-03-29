@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
 import { NavController, ModalController, Platform, ActionSheetController, ToastController } from 'ionic-angular';
-import { SQLite, Mixpanel } from 'ionic-native';
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import { Vibration } from '@ionic-native/vibration';
 import { ModalForm } from '../../components/modal-form/modal-form';
-import { Settings } from '../settings/settings';
+import { SettingsPage } from '../settings/settings';
 
 @Component({
   selector: 'page-home',
@@ -12,7 +13,7 @@ import { Settings } from '../settings/settings';
 export class HomePage {
 
   public resultArray: Object[] = [];
-  constructor(public navCtrl: NavController, public modalController: ModalController, platform: Platform, public actionSheetCtrl: ActionSheetController, public toastController: ToastController) {
+  constructor(public navCtrl: NavController, public modalController: ModalController, platform: Platform, public actionSheetCtrl: ActionSheetController, public toastController: ToastController, private sqlite: SQLite, private vibration: Vibration) {
     platform.ready().then(() => {
       this.getResults();
     });
@@ -27,19 +28,17 @@ export class HomePage {
   }
 
   viewSettings() {
-    this.navCtrl.push(Settings);
+    this.navCtrl.push(SettingsPage);
   }
 
   getResults() {
-    let db = new SQLite();
-
     // reset
     this.resultArray.length = 0;
     
-    db.openDatabase({
+    this.sqlite.create({
       name: 'data.db',
       location: 'default'
-    }).then(() => {
+    }).then((db: SQLiteObject) => {
       db.executeSql('SELECT id, firstName, lastName, whoPaid FROM DataTable ORDER BY firstName ASC', {}).then((results) => {
         if (results["rows"].length > 0) {
           for(let i = 0; i < results["rows"].length; i++) {
@@ -61,7 +60,6 @@ export class HomePage {
   }
 
   deleteResult(index, id) {
-    let db = new SQLite();
     let toast = this.toastController.create({
         message: `${this.resultArray[index]["firstName"]} ${this.resultArray[index]["lastName"]} was successfully removed.`,
         position: 'top',
@@ -69,16 +67,13 @@ export class HomePage {
         duration: 2000
       });
     
-    db.openDatabase({
+    this.sqlite.create({
       name: 'data.db',
       location: 'default'
-    }).then(() => {
+    }).then((db: SQLiteObject) => {
       db.executeSql('DELETE FROM DataTable WHERE id = ?', [id]).then(() => {
         toast.present();
         this.resultArray.splice(index, 1);
-        
-        // Mixpanel Analytics
-        Mixpanel.track("Person Deleted");
         
       }, (err) => {
         console.error('Unable to execute sql: ', JSON.stringify(err));
@@ -107,7 +102,6 @@ export class HomePage {
   }
 
   toggleResult(index: number, id: number, whoPaid: string) {
-    let db = new SQLite();
     let changedWhoPaid: string = '';
 
     // update model
@@ -117,16 +111,16 @@ export class HomePage {
       changedWhoPaid = 'you';
     }
 
+    // vibrates device
+    this.vibration.vibrate(1000);
+
     this.resultArray[index]["whoPaid"] = changedWhoPaid;
 
-    // Mixpanel Analytics
-    Mixpanel.track("Result Toggled");
-
     // update database
-    db.openDatabase({
+    this.sqlite.create({
       name: 'data.db',
       location: 'default'
-    }).then(() => {
+    }).then((db: SQLiteObject) => {
       db.executeSql('UPDATE DataTable SET whoPaid = ? WHERE id = ?', [changedWhoPaid, id]).then((result) => {
         console.log(JSON.stringify(result));
       }, (err) => {

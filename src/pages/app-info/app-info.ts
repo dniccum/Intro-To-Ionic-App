@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 /*
   Generated class for the AppInfo page.
@@ -11,12 +11,12 @@ import { NavController } from 'ionic-angular';
   selector: 'page-app-info',
   templateUrl: 'app-info.html'
 })
-export class AppInfo {
+export class AppInfoPage {
 
-  constructor(public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {
-    console.log('Hello AppInfo Page');
+    console.log('ionViewDidLoad AppInfoPage');
   }
 
 }

@@ -1,14 +1,9 @@
 import { Component } from '@angular/core';
 
 import { ViewController, ToastController } from 'ionic-angular';
-import { SQLite, Keyboard, Mixpanel } from 'ionic-native';
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import { Keyboard } from '@ionic-native/keyboard';
 
-/*
-  Generated class for the ModalForm component.
-
-  See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
-  for more info on Angular 2 Components.
-*/
 @Component({
   selector: 'modal-form',
   templateUrl: 'modal-form.html'
@@ -19,12 +14,12 @@ export class ModalForm {
     lastName: null
   };
 
-  constructor(public viewController: ViewController, public toastController: ToastController) {}
+  constructor(public viewController: ViewController, public toastController: ToastController, private sqlite: SQLite, private keyboard: Keyboard) {}
 
   closeModal() {
     this.viewController.dismiss();
     this.clearForm();
-    Keyboard.close();
+    this.keyboard.close();
   }
 
   clearForm() {
@@ -44,7 +39,6 @@ export class ModalForm {
       toast.present();
     } else {
       // form is valid
-      let db = new SQLite();
       let toast = this.toastController.create({
         message: `${this.person["firstName"]} ${this.person["lastName"]} was added successfully.`,
         position: 'top',
@@ -52,13 +46,11 @@ export class ModalForm {
         duration: 2000
       });
 
-      db.openDatabase({
+      this.sqlite.create({
         name: 'data.db',
         location: 'default'
-      }).then(() => {
+      }).then((db: SQLiteObject) => {
         db.executeSql('INSERT INTO DataTable (firstName, lastName, whoPaid) VALUES (?,?,?)', [this.person["firstName"], this.person["lastName"], 'you']).then(() => {
-          // Mixpanel Analytics
-          Mixpanel.track("Person Added");
           
           toast.present();
           this.closeModal();

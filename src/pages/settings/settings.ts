@@ -1,27 +1,20 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
+import { AppInfoPage } from '../app-info/app-info';
 
-import { AppInfo } from '../app-info/app-info';
-
-/*
-  Generated class for the Settings page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-settings',
   templateUrl: 'settings.html'
 })
-export class Settings {
+export class SettingsPage {
   public appInfoPage;
 
-  constructor(public navCtrl: NavController) {
-    this.appInfoPage = AppInfo;
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.appInfoPage = AppInfoPage;
   }
 
   ionViewDidLoad() {
-    console.log('Hello Settings Page');
+    console.log('ionViewDidLoad SettingsPage');
   }
 
 }

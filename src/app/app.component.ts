@@ -1,40 +1,35 @@
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
-import { StatusBar, SQLite, Mixpanel } from 'ionic-native';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { SQLite, SQLiteObject} from '@ionic-native/sqlite';
 
 import { HomePage } from '../pages/home/home';
 
 
 @Component({
-  template: `<ion-nav [root]="rootPage"></ion-nav>`
+  templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage = HomePage;
+  rootPage:any = HomePage;
 
-  constructor(platform: Platform) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private sqlite: SQLite) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      StatusBar.styleDefault();
+      statusBar.styleDefault();
+      splashScreen.hide();
 
-      // Mixpanel Init
-      Mixpanel.init("f4e6fb63f40d6acbab002ad63c8b95a7").then(() => {
-        Mixpanel.track("App Booted");
-      });
-
-      let db = new SQLite();
-      db.openDatabase({
+      this.sqlite.create({
         name: 'data.db',
         location: 'default'
-      }).then(() => {
+      }).then((db: SQLiteObject) => {
         db.executeSql('CREATE TABLE IF NOT EXISTS DataTable (id INTEGER PRIMARY KEY AUTOINCREMENT, firstName VARCHAR(32), lastName VARCHAR(32), whoPaid VARCHAR(4))', {}).then(() => {
 
         }, (err) => {
           console.error('Unable to execute sql: ', JSON.stringify(err));
         });
-      }, (err) => {
-        console.error('Unable to open database: ', JSON.stringify(err));
-      });
+      }).catch(e => console.log(e));
     });
   }
 }
