@@ -1,6 +1,6 @@
 # Intro to Ionic Application
 
-This is the project that was constructed and demoed at the [2016 Prairie.Code() Conference](http://prairiecode.amegala.com/) in Des Moines, IA by [Doug Niccum](http://dniccumdesign.com).
+This is the project that was constructed and demoed at the [2016 Prairie.Code() Conference](http://prairiecode.amegala.com/) in Des Moines, IA and [2017 Indy.Code() Conference](http://indycode.amegala.com/) in Indianapolis, IN by [Doug Niccum](http://dniccumdesign.com).
 
 This project is open-sourced and available any further development and/or cloning.
 
@@ -22,10 +22,10 @@ Regardless of operating system, you will need the following dependencies:
 
 ### Android
 
-* [JDK 7](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
+* [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
 * [Android Studio](https://developer.android.com/studio/index.html)
-    * Android 6.0 API
-    * Android SDK Build Tools 23.0.3
+    * Android API
+    * Android SDK Build Tools
 
 ## To Build This Project
 
